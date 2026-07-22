@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LLM Projects — Javeria Aamir</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="nav-name" href="index.html">J. Aamir</a>
+    <ul class="nav-links">
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#projects">Projects</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section>
+  <div class="wrap" style="padding-top:56px;">
+    <a class="back-link" href="index.html#projects">← Back to projects</a>
+    <div class="section-head"><span class="section-num">LLM</span><h2>LLM projects</h2></div>
+
+    <div class="project-list" id="project-list"></div>
+    <div class="pager">
+      <button id="prev-btn">← Prev</button>
+      <button id="next-btn">Next →</button>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <h2>Say hi.</h2>
+    <p>I'm looking for a role in AI or computer vision, doesn't have to be an internship. Open to whatever fits.</p>
+    <div class="contact-links">
+      <a href="https://linkedin.com/in/javeriaaamirpk" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/J-Aamir" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://huggingface.co/Aspire-Pakistan" target="_blank" rel="noopener">Hugging Face</a>
+    </div>
+    <span class="foot-note">Built by Javeria Aamir</span>
+  </div>
+</footer>
+
+<script>
+  const projects = [
+    {
+      tag: "Fine-tuning",
+      title: "Financial LLM Alignment: Curriculum SFT & DPO",
+      desc: "Fine-tuned a 12B model to answer financial questions better than models twice its size, using a staged training approach (curriculum SFT, then DPO) instead of throwing everything at it at once.",
+      link: "https://github.com/J-Aamir/FineTuned-Finance-Models-Evaluation-using-Judge",
+      linkLabel: "Repo ↗"
+    },
+    {
+      tag: "Pre-training",
+      title: "GPT-2, Pre-trained on Australian Legal Text",
+      desc: "Trained a GPT-2 model completely from scratch (no fine-tuning shortcuts) on legal text I scraped and cleaned myself from government sources. Did it all on a single free-tier GPU, which meant getting creative with memory.",
+      link: "https://github.com/J-Aamir/Domain-Specific-GPT2-Pretraining-Australian-Legal-Corpus",
+      linkLabel: "Repo ↗"
+    },
+    {
+      tag: "RAG",
+      title: "RAG-based Systematic Review Assistant",
+      desc: "Systematic reviews take forever to write by hand, so I built an assistant that speeds it up: searching academic literature by meaning, not keywords, using FAISS and Llama 3.3 under the hood.",
+      link: "https://huggingface.co/Aspire-Pakistan",
+      linkLabel: "Hugging Face ↗"
+    }
+  ];
+
+  const perPage = 2;
+  let page = 0;
+  const totalPages = Math.ceil(projects.length / perPage);
+  const listEl = document.getElementById('project-list');
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+
+  function render(){
+    const start = page * perPage;
+    const items = projects.slice(start, start + perPage);
+    listEl.innerHTML = items.map(p => `
+      <div class="project-card">
+        <span class="p-tag">${p.tag}</span>
+        <h3>${p.title}</h3>
+        <p>${p.desc}</p>
+        <div class="p-links"><a href="${p.link}" target="_blank" rel="noopener">${p.linkLabel}</a></div>
+      </div>
+    `).join('');
+    prevBtn.disabled = page === 0;
+    nextBtn.disabled = page >= totalPages - 1;
+  }
+
+  prevBtn.addEventListener('click', () => { if(page > 0){ page--; render(); } });
+  nextBtn.addEventListener('click', () => { if(page < totalPages - 1){ page++; render(); } });
+
+  render();
+</script>
+
+</body>
+</html>
