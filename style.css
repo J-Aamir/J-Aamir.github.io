@@ -165,7 +165,7 @@ section:last-of-type{border-bottom:none;}
 .about-grid{ display:flex; flex-direction:column; gap:6px; }
 .about-grid p{color:var(--ink-soft); margin:0 0 16px; max-width:640px;}
 
-/* oloid — footer corner accent */
+/* oloid — footer corner accent (simple 2D rotation, no 3D/perspective dependency) */
 .footer-row{
   position:relative;
   display:flex;
@@ -174,7 +174,6 @@ section:last-of-type{border-bottom:none;}
   margin-bottom:48px;
 }
 .oloid-stage{
-  perspective:520px;
   width:44px;
   height:44px;
 }
@@ -189,20 +188,18 @@ section:last-of-type{border-bottom:none;}
   position:relative;
   width:100%;
   height:100%;
-  transform-style:preserve-3d;
-  animation:oloid-spin 9s linear infinite;
+  animation:oloid-rotate 6s linear infinite;
 }
 .oloid-ring{
   position:absolute;
-  inset:0;
   border:1.4px solid var(--teal);
   border-radius:50%;
 }
-.oloid-ring.b{ transform:rotateY(90deg); }
-.oloid-ring.c{ transform:rotateY(45deg); opacity:0.45; }
-@keyframes oloid-spin{
-  from{ transform:rotateX(12deg) rotateY(0deg); }
-  to{ transform:rotateX(12deg) rotateY(360deg); }
+.oloid-ring.a{ inset:0; }
+.oloid-ring.b{ top:9px; left:16px; width:65%; height:65%; opacity:0.6; }
+@keyframes oloid-rotate{
+  from{ transform:rotate(0deg); }
+  to{ transform:rotate(360deg); }
 }
 
 /* category tiles on homepage */
